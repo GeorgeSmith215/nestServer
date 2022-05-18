@@ -4,14 +4,18 @@ import { HttpExceptionFilter } from './core/filter/http-exception.filter';
 import { TransformInterceptor } from './core/interceptor/transform.interceptor';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger'
 import { ValidationPipe } from "@nestjs/common";
+import { logger } from './core/middleware/logger.middleware'
+import * as express from 'express';
+import { AllExceptionsFilter } from './core/filter/any-exception.filter'
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.setGlobalPrefix('api'); // 设置全局路由前缀
-  // 注册全局错误的过滤器
-  app.useGlobalFilters(new HttpExceptionFilter());
-  // 全局注册拦截器
+  // 使用拦截器打印出参
   app.useGlobalInterceptors(new TransformInterceptor());
+  // 注册错误过滤器
+  app.useGlobalFilters(new AllExceptionsFilter());
+  app.useGlobalFilters(new HttpExceptionFilter());
   // 全局注册管道
   app.useGlobalPipes(new ValidationPipe());
   // 设置swagger文档
@@ -22,7 +26,11 @@ async function bootstrap() {
       .addBearerAuth()
       .build();
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('docs', app, document);
+  SwaggerModule.setup('docs', app, document);app.use(express.json()); // For parsing application/json
+  app.use(express.urlencoded({ extended: true })); // For parsing application/x-www-form-urlencoded
+  // 监听所有的请求路由，并打印日志
+  app.use(logger);
+
   await app.listen(3000);
 }
 bootstrap();

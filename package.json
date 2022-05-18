@@ -1,10 +1,10 @@
 {
   "name": "nest-demo",
   "version": "0.0.1",
-  "description": "",
-  "author": "",
+  "description": "<p align=\"center\">   <a href=\"http://nestjs.com/\" target=\"blank\"><img src=\"https://nestjs.com/img/logo-small.svg\" width=\"200\" alt=\"Nest Logo\" /></a> </p>",
+  "author": "george smith",
   "private": true,
-  "license": "UNLICENSED",
+  "license": "MIT",
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build",
@@ -31,6 +31,9 @@
     "@nestjs/typeorm": "^8.0.3",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.13.2",
+    "express": "^4.18.1",
+    "log4js": "^6.4.7",
+    "moment": "^2.29.3",
     "mysql2": "^2.3.3",
     "passport": "^0.5.2",
     "passport-jwt": "^4.0.0",
@@ -38,8 +41,10 @@
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0",
+    "stacktrace-js": "^2.0.2",
     "swagger-ui-express": "^4.3.0",
-    "typeorm": "^0.3.6"
+    "typeorm": "^0.3.6",
+    "webpack": "^5.72.1"
   },
   "devDependencies": {
     "@nestjs/cli": "^8.0.0",
@@ -80,5 +85,17 @@
     ],
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"
-  }
+  },
+  "main": ".eslintrc.js",
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GeorgeSmith215/nestServer.git"
+  },
+  "bugs": {
+    "url": "https://github.com/GeorgeSmith215/nestServer/issues"
+  },
+  "homepage": "https://github.com/GeorgeSmith215/nestServer#readme"
 }
