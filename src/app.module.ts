@@ -7,6 +7,7 @@ import { PostsModule } from "./posts/posts.module";
 import { UsersModule } from './users/users.module';
 import { UsersController } from "./users/users.controller";
 import { AuthModule } from './logical/auth/auth.module';
+import { CommodityModule } from './logical/commodity/commodity.module';
 import envConfig from '../config/env';
 
 @Module({
@@ -33,6 +34,7 @@ import envConfig from '../config/env';
     PostsModule,
     UsersModule,
     AuthModule,
+    CommodityModule,
   ],
   controllers: [AppController, UsersController],
   providers: [AppService],

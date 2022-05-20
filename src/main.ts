@@ -11,6 +11,10 @@ import { AllExceptionsFilter } from './core/filter/any-exception.filter'
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.setGlobalPrefix('api'); // 设置全局路由前缀
+  app.use(express.json()); // For parsing application/json
+  app.use(express.urlencoded({ extended: true })); // For parsing application/x-www-form-urlencoded
+  // 监听所有的请求路由，并打印日志
+  app.use(logger);
   // 使用拦截器打印出参
   app.useGlobalInterceptors(new TransformInterceptor());
   // 注册错误过滤器
@@ -23,13 +27,11 @@ async function bootstrap() {
       .setTitle('管理后台')
       .setDescription('管理后台接口文档')
       .setVersion('1.0')
-      .addBearerAuth()
+      .addTag('test')
+      .addBearerAuth() // 开启 BearerAuth 授权认证
       .build();
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('docs', app, document);app.use(express.json()); // For parsing application/json
-  app.use(express.urlencoded({ extended: true })); // For parsing application/x-www-form-urlencoded
-  // 监听所有的请求路由，并打印日志
-  app.use(logger);
+  SwaggerModule.setup('docs', app, document);
 
   await app.listen(3000);
 }
