@@ -25,7 +25,7 @@ export class UsersController {
     })
     async login(@Body() loginParams: LoginDTO) {
         console.log('JWT验证 - Step 1: 用户请求登录');
-        console.log('输入信息', loginParams)
+        console.log('输入信息', loginParams);
         const authResult = await this.authService.validateUser(loginParams.username, loginParams.password);
         if (authResult) {
             return this.authService.certificate(authResult);

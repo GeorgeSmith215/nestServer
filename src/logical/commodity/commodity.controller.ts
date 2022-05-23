@@ -5,7 +5,10 @@ import { CommodityService } from './commodity.service';
 import { RbacInterceptor } from '../../core/interceptor/rbac.interceptor';
 import { RbacGuard } from '../../core/guards/rbac.guard';
 import { roleConstants as role } from '../auth/constants';
+import {ApiBearerAuth, ApiTags} from "@nestjs/swagger";
 
+@ApiBearerAuth() // Swagger 的 JWT 验证
+@ApiTags('commodity')
 @Controller('commodity')
 export class CommodityController {
     constructor(private readonly commodityService: CommodityService) {}

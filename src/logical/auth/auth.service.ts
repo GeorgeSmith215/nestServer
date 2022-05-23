@@ -4,6 +4,7 @@ import { UsersService } from "../../users/users.service";
 import { UsersEntity } from "../../users/users.entity";
 import { JwtService } from '@nestjs/jwt';
 import { encryptPassword } from '../../utils/cryptogram';
+import { RedisInstance } from '../../database/redis';
 
 @Injectable()
 export class AuthService {
@@ -33,13 +34,23 @@ export class AuthService {
     }
 
     // JWT验证 - Step 3: 处理 jwt 签证
-    async certificate(user: Partial<UsersEntity>): Promise<string> {
+    async certificate(user: any) {
         const payload = { username: user.account_name, sub: user.user_id, realName: user.real_name, role: user.role };
         console.log('JWT验证 - Step 3: 处理 jwt 签证');
         try {
             const token = this.jwtService.sign(payload);
+            // 实例化 redis
+            const redis = await RedisInstance.initRedis('auth.certificate', 0);
+            // 将用户信息和 token 存入 redis，并设置失效时间，语法：[key, seconds, value]
+            await redis.setex(`${user.user_id}-${user.account_name}`, 300, `${token}`);
             console.log(token)
-            return token
+            return {
+                code: 200,
+                data: {
+                    token,
+                },
+                msg: `登录成功`,
+            };
         } catch (error) {
             throw new HttpException('账号或密码错误', 402)
         }

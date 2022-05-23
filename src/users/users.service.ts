@@ -16,8 +16,8 @@ export class UsersService {
     }
 
     async register(requestBody: any): Promise<UsersEntity> {
-        const { accountName, realName, password, rePassword, mobile } = requestBody;
-        if (password !== rePassword) throw new HttpException('两次密码输入不一致', 400)
+        const { accountName, realName, password, repassword, mobile } = requestBody;
+        if (password !== repassword) throw new HttpException('两次密码输入不一致', 400)
         const user = await this.findOne(accountName)
         if (user) throw new HttpException('用户已存在', 400)
         const salt = makeSalt()
