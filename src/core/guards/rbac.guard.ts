@@ -14,7 +14,10 @@ export class RbacGuard implements CanActivate {
     const user = request.user;
 
     // 获取请求头里的 token
-    const authorization = request['header'].authorization || void 0;
+    const authorization = request['header']('authorization') || void 0;
+    if (!authorization) {
+      throw new UnauthorizedException('请先进行登录');
+    }
     const token = authorization.split(' ')[1]; // authorization: Bearer xxx
 
     //获取 redis 里缓存的token
@@ -24,7 +27,7 @@ export class RbacGuard implements CanActivate {
 
     if (token !== cache) {
       // 如果 token 不匹配，禁止访问
-      throw new UnauthorizedException('您的账号在其他地方登录，请重新登录');
+      throw new UnauthorizedException('您在其他地方已登录或登录状态已过期，请先退出或重新登录');
     }
 
     if (user.role > this.role) {

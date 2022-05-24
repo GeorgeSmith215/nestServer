@@ -1,5 +1,5 @@
 // src/logical/commodity/commodity.controller.ts
-import { Controller, Request, Post, Body, UseGuards, UseInterceptors } from '@nestjs/common';
+import { Controller, Request, Post, Get, Body, UseGuards, UseInterceptors } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { CommodityService } from './commodity.service';
 import { RbacInterceptor } from '../../core/interceptor/rbac.interceptor';
@@ -17,7 +17,7 @@ export class CommodityController {
     @UseGuards(new RbacGuard(role.HUMAN))
     @UseGuards(AuthGuard('jwt'))
     // @UseInterceptors(new RbacInterceptor(role.HUMAN))
-    @Post('list')
+    @Get('list')
     async queryColumnList(@Body() body: any) {
         return await this.commodityService.queryCommodityList(body);
     }
