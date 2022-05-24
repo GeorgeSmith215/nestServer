@@ -1,7 +1,7 @@
 // src/logical/auth/auth.service.ts
 import {HttpException, Injectable} from '@nestjs/common';
-import { UsersService } from "../../users/users.service";
-import { UsersEntity } from "../../users/users.entity";
+import { UsersService } from "../users/users.service";
+import { UsersEntity } from "../users/users.entity";
 import { JwtService } from '@nestjs/jwt';
 import { encryptPassword } from '../../utils/cryptogram';
 import { RedisInstance } from '../../database/redis';

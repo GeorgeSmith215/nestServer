@@ -2,7 +2,7 @@ import { HttpException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm'
 import { getRepository, Repository } from 'typeorm'
 import { UsersEntity } from "./users.entity";
-import { makeSalt, encryptPassword } from "../utils/cryptogram";
+import { makeSalt, encryptPassword } from "../../utils/cryptogram";
 
 @Injectable()
 export class UsersService {

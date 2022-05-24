@@ -1,8 +1,8 @@
 import { Controller, Post, Body, UseGuards, UsePipes } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { AuthService } from "../logical/auth/auth.service";
+import { AuthService } from "../auth/auth.service";
 import { UsersService } from "./users.service";
-import { ValidationPipe } from '../core/pipe/validation.pipe';
+import { ValidationPipe } from '../../core/pipe/validation.pipe';
 import  { RegisterInfoDTO, LoginDTO } from "./user.dto";
 import { ApiTags, ApiBearerAuth, ApiBody } from "@nestjs/swagger";
 
